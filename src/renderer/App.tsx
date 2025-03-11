@@ -1,6 +1,5 @@
+import 'tailwindcss/tailwind.css';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-// import icon from '../../assets/icon.svg';
-import './App.css';
 import Layout from './layout';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
@@ -44,6 +43,7 @@ import Profile from './profile';
 // }
 
 export default function App() {
+  document.querySelector('html')?.classList.add('dark');
   return (
     <Router>
       <Routes>
