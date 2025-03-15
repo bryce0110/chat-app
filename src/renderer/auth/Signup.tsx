@@ -1,5 +1,5 @@
 import React, { MouseEvent, useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import icon from '../../../assets/icon.svg';
 import { auth } from '../services/firebase';
@@ -7,6 +7,7 @@ import { auth } from '../services/firebase';
 function Signup() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [notice, setNotice] = useState('');
@@ -18,8 +19,15 @@ function Signup() {
 
     if (password === confirmPassword) {
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        navigate('/');
+        const credential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
+        updateProfile(credential.user, {
+          displayName: name,
+        });
+        navigate('/login');
       } catch {
         setNotice('Sorry, something went wrong. Please try again.');
       }
@@ -60,6 +68,26 @@ function Signup() {
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </label>
+          </div>
+
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm/6 font-medium text-white"
+            >
+              Display Name
+              <div className="mt-2">
+                <input
+                  id="name"
+                  name="name"
+                  type="name"
+                  required
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </label>

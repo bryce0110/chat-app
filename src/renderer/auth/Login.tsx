@@ -17,7 +17,7 @@ function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/profile');
+      navigate('/app');
     } catch (error) {
       setNotice('You entered an invalid email or password');
     }
