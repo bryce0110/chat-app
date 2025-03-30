@@ -32,7 +32,7 @@ function SendMessage() {
 
   return (
     <form
-      className="fixed bottom-0 left-0 right-0 bg-slate-800"
+      className="bottom-0 left-0 right-0 bg-slate-800"
       onSubmit={(e) => sendMessage(e)}
     >
       <div className="flex -mt-2 mb-6 px-4 py-1 bg-gray-500 items-center justify-between rounded-md text-gray-600">

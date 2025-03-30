@@ -53,8 +53,8 @@ function Chat() {
   // };
 
   return (
-    <main className="chat-box">
-      <div className="messages-wrapper pb-16">
+    <main className="chat-box flex flex-col justify-end h-screen w-full">
+      <div className="messages-wrapper mb-2 pb-2 overflow-y-auto">
         {messages?.map((message) => (
           <Message key={message.id} message={message} />
         ))}

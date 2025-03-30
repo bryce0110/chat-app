@@ -1,4 +1,5 @@
 import 'tailwindcss/tailwind.css';
+import './globals.css';
 import {
   MemoryRouter as Router,
   Routes,
@@ -7,8 +8,8 @@ import {
 } from 'react-router-dom';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
-import Chat from './components/chat';
-import Dashboard from './components/dashboard';
+import Chat from './components/Chat';
+import Dashboard from './components/Dashboard';
 
 // TODO: Proper authentication persistence. Maybe use a context provider?
 const isAuthenticated = false;
