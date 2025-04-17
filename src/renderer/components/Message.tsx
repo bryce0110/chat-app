@@ -3,13 +3,7 @@ import { DocumentData } from 'firebase/firestore';
 
 function Message({ message }: DocumentData) {
   function formatDate(date: Date | string): string {
-    if (typeof date === 'string') {
-      return date;
-    }
-    return `${date.toLocaleString('en-US', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    })}`;
+    return new Date(date).toLocaleString();
   }
 
   return (
@@ -26,13 +20,13 @@ function Message({ message }: DocumentData) {
           <span className="font-semibold text-sm text-white">
             {message?.name || 'Unknown User'}
           </span>
-          {message.createdAt && (
+          {message.inserted_at && (
             <span className="text-xs text-gray-600">
-              {formatDate(message.createdAt.toDate())}
+              {formatDate(message.inserted_at)}
             </span>
           )}
         </div>
-        <p className="text-sm text-white">{message.text}</p>
+        <p className="text-sm text-white">{message.body}</p>
       </div>
     </div>
     // <div className={`chat-bubble`}>

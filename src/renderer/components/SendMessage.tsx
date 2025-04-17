@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { auth, db } from '../services/firebase';
+import { Channel } from 'phoenix';
+import { auth } from '../services/firebase';
+import { sendMessage } from '../hooks/useChannel';
 
-function SendMessage() {
+interface SendMessageProps {
+  channel: Channel | null;
+}
+
+function SendMessage({ channel }: SendMessageProps) {
   const [message, setMessage] = useState('');
 
-  const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+  const send = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (message.trim() === '') {
@@ -18,14 +23,21 @@ function SendMessage() {
       // alert("User not authenticated");
       return;
     }
+    // const createdAt = serverTimestamp();
     const { uid, displayName, photoURL } = currentUser;
-    await addDoc(collection(db, 'messages'), {
-      text: message,
+    await sendMessage(channel, 'new_msg', {
       name: displayName,
+      body: message,
       avatar: photoURL,
-      createdAt: serverTimestamp(),
       uid,
     });
+    // await addDoc(collection(db, 'messages'), {
+    //   text: message,
+    //   name: displayName,
+    //   avatar: photoURL,
+    //   createdAt,
+    //   uid,
+    // });
     setMessage('');
     // scroll.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -33,7 +45,7 @@ function SendMessage() {
   return (
     <form
       className="bottom-0 left-0 right-0 bg-slate-800"
-      onSubmit={(e) => sendMessage(e)}
+      onSubmit={(e) => send(e)}
     >
       <div className="flex -mt-2 mb-6 px-4 py-1 bg-gray-500 items-center justify-between rounded-md text-gray-600">
         <input
